@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css"
+import Home from "./components/Home";
+import NAvbar from "./components/Navbar";
+import SignIn from "./components/SignIn";
+import Signup from "./components/Signup";
+import Welcome from "./components/Welcome";
+import ProtectedRoute from "./components/ProtectedRoute"
+import { todo } from "./data.json";
+import {UserAuthContextProvider} from "./context/UserAuthContext"
+
+//router
+import { Routes, Route} from "react-router-dom";
+
+//material-ui
+import { Container } from "@material-ui/core";
+//const todoListes = JSON.stringify(todo)
+//console.log(todoListes);
 
 function App() {
+  //const [todosListe, setTodosListe] = useState(todo)
+  //console.log(todosListe)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserAuthContextProvider>
+    <Container>
+      <NAvbar />
+
+      {/*<SignIn/>*/}
+      {/* <Welcome task={todo}/>*/}
+      <Routes>
+        <Route path="/welcome" element={<ProtectedRoute><Welcome task={todo} /></ProtectedRoute>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<Signup />} />
+        
+      </Routes>
+    </Container>
+    </UserAuthContextProvider>
   );
 }
 
 export default App;
+
