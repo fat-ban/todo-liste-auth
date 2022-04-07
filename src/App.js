@@ -1,39 +1,43 @@
-
-import {React, useState} from "react";
+import React,{useState} from "react";
+import "./App.css"
 import Home from "./components/Home";
-import NAvbar from "./components/Navbar/NAvbar";
+import NAvbar from "./components/Navbar";
 import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp"
+import Signup from "./components/Signup";
 import Welcome from "./components/Welcome";
-import {todo} from "./data.json";
+import ProtectedRoute from "./components/ProtectedRoute"
+import { todo } from "./data.json";
+import {UserAuthContextProvider} from "./context/UserAuthContext"
+
 //router
-import {BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 
-
+//material-ui
+import { Container } from "@material-ui/core";
 //const todoListes = JSON.stringify(todo)
 //console.log(todoListes);
 
 function App() {
-  //const [todosListe, setTodosListe] = useState(todo)
+  const [task, setTask] = useState(todo)
   //console.log(todosListe)
   return (
-    <BrowserRouter >
-        <NAvbar/>
-        {/*<SignIn/>*/}
+    <UserAuthContextProvider>
+    <Container>
+      <NAvbar />
+
+      {/*<SignIn/>*/}
       {/* <Welcome task={todo}/>*/}
       <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/welcome" element={<Welcome task={todo}/>} />
+        <Route path="/welcome" element={<ProtectedRoute><Welcome task={task} setTask={setTask} /></ProtectedRoute>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<Signup />} />
         
       </Routes>
-      
-   </BrowserRouter>
+    </Container>
+    </UserAuthContextProvider>
   );
 }
 
 export default App;
+

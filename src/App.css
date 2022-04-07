@@ -1,0 +1,220 @@
+#root {
+  padding: 0;
+  margin: 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+/*navbar*/
+.card-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* height: 200px;*/
+  margin: 40px 0;
+  padding: 10px;
+  border: 0.5px solid #586158;
+}
+/*sign in */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* height: 200px;*/
+  margin-top: 70px;
+}
+.form {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
+}
+.input {
+  width: 350px;
+  height: 70px;
+  margin: 0;
+}
+.btn {
+  width: 350px;
+}
+
+.div-btn{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-add{
+  width: 250px;
+  /*margin: 10px;*/
+  /*margin: 50px;*/
+  /*align-self: center;*/
+}
+.btn-filter{
+  width: 250px;
+  /*margin: 10px;*/
+}
+
+.google-btn {
+  padding: 1px 55px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+hr {
+  border: 1px solid rgb(190, 190, 226);
+  width: 350px;
+}
+/*task*/
+.task-card {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-column-gap: 8px;
+  /*flex-flow: wrap;*/
+  /*flex-direction: row;
+  flex-wrap:wrap;
+  /*justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  /*border: 0.5px solid rgb(122, 98, 231);*/
+  margin-top: 20px;
+/*  height: auto;
+  width: 100%;*/
+  
+  /* margin-Top:200px;*/
+}
+.typography-task{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items:flex-start;
+  /*padding: 20px;*/
+  /*text-align: start;*/
+  height: 100%;
+  padding-bottom: 20px;
+}
+/*****/
+.container-tasklist {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width: 100%;
+/*padding-top: 100px;*/
+/*padding-bottom: 60px;*/
+  /*margin-top: 80px;
+  height: 400px;*/
+}
+.title-taskliste {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*padding-bottom: 20px;*/
+  color: darkslateblue;
+}
+.task {
+  display: flex;
+  flex-direction: column;
+  /*align-items: center;*/
+  margin: 10px;
+  /*flex: 2;*/
+  border: 1px solid rgb(158, 123, 182);
+ /* height: 25%;*/
+  /*width: 25%;*/
+  padding: 10px;
+}
+
+
+.div-Delete-Edit{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /*align-items: center;*/
+  width: 150px;
+}
+/*home*/
+.container-home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+.typography-home {
+  text-align: center;
+}
+.alert{
+  margin-top:50px;
+}
+.container-welcome{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   margin-top: 80px;
+}
+.modal{
+ /* position: relative;
+  top:90;
+  left: 150;
+  right: 50;
+  bottom: 90;*/
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 250px;
+  margin-top: 90px;
+  height: 200px;
+  width: 350px;
+  height: auto;
+  padding: 25px;
+  border: 1px solid darkslateblue;
+}
+
+.form-modal{
+  display: flex;
+  flex-direction: column;
+  /*justify-content: center;*/
+  /*justify-content: space-between;*/
+  align-items: center;
+  margin-bottom: 15px;
+}
+.input-modal{
+ /*margin: 8px;*/
+padding: 10px;
+ width: 350px;
+ height: 70px;
+}
+.btn-modal{
+  /*position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: flex-end;*/
+  margin-top: 9px;
+
+
+}
+.select{
+  width: 350px;
+  margin-bottom: 20px;
+}
+.select-filter{
+  width: 150px;
+  margin-left: 20px;
+}
+
+.div-select-filter{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.select-filter option{
+  padding:10px;
+}

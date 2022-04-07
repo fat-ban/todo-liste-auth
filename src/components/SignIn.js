@@ -1,51 +1,112 @@
-import React from 'react'
-import {Card,Typography ,CardActions,Button,TextField } from '@material-ui/core';
-import GoogleButton from 'react-google-button'
+import React,{useState} from "react";
+import {
+  Card,
+  Typography,
+  TextField,
+  Button
+} from "@material-ui/core";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import GoogleButton from "react-google-button";
+import { Link, useNavigate } from "react-router-dom";
+//firebase
+import { useUserAuth } from "../context/UserAuthContext";
 
-
-
-
-    
-   
 const SignIn = () => {
-   
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
+  const [password, setPassword] = useState("");
+
+  const { logIn,googleSignIn } = useUserAuth();
+
+  let navigate = useNavigate()
+
+  //sign in with google
+  const handleGoogleSignIn=async (e)=>{
+    e.preventDefault()
+ try {
+   await googleSignIn()
+   navigate("/welcome")
+
+ } catch (error) {
+   console.log(error)
+ }
+  }
+
+  const handleSubmit= async(e)=>{
+    e.preventDefault()
+    setError("");
+    
+    try {
+      await logIn(email, password);
+     setLoading(true)
+      navigate("/welcome");
+
+    } catch (err) {
+      setError(err.message);
+      console.log(`error${error}`);
+    }
+  }
   return (
-    <Card className="card">
+
+    <>
+   
+      
+      <Card className="card">
         <Typography variant="h4" component="h2">
-         Log In
-        </Typography>  
-        <form className="form"  autoComplete="off">
-        <TextField
-        className="input"
-    
-    label="Enter your Email"
-    variant="outlined"
-    color="secondary"
-  />
+          Log In
+        </Typography>
+        {error && (
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            This is an error alert — <strong>{error}</strong>
+          </Alert>
+        )}
+        <form className="form" autoComplete="off" onSubmit={handleSubmit}>
           <TextField
-           className="input"
-    
-    label="Enter your Password"
-    variant="outlined"
-    color="secondary"
-  />
-  
-      
-        </form>
-        <CardActions>
-        <Button className="btn" size="large" variant="contained" color="primary">LogIn</Button>
-        
-
-      </CardActions> 
-      <hr />
-      
-      <GoogleButton
-            className="google-btn"
-            type="dark"
-            onClick={""}
+            className="input"
+            variant="outlined"
+            color="secondary"
+            type="email"
+            placeholder="Email address"
+            onChange={(e) => setEmail(e.target.value)}
           />
-    </Card>
-  )
-}
+          
+          <TextField
+            className="input"
+            variant="outlined"
+            color="secondary"
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            
+          />
+          <Button
+            className="btn"
+            size="large"
+            variant="contained"
+            color="primary"
+            type="Submit"
+          >
+            Sign In
+          </Button>
+        </form>
+        
+          
+        
+        <hr />
 
-export default SignIn
+        <GoogleButton className="google-btn" type="dark" onClick={handleGoogleSignIn} />
+      </Card>
+      <Card className="card-bottom">
+        <Typography component="span">
+          Don't have an account? <Link to="/signup">Sign Up</Link>
+        </Typography>
+      </Card>
+      
+    
+    </>
+  );
+};
+
+export default SignIn;

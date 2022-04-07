@@ -1,93 +1,13 @@
-#root{
-    padding: 0;
-    margin: 0;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-body{
-    margin:0;
-    padding:0;
-    
-}
-/*sign in */
-.card {
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height:500px;
-    margin:100px;
-   
-  }
-  .form {
-   
-    height:300px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    margin-bottom: 0;
 
-  }
-  .input {
-    width:350px;
-    height: 70px;
-    margin:0 ;
-    
-  }
-  .btn{
-      width: 350px;
-     
-  }
-  .google-btn{
-    padding: 1px 55px;
-    border-radius: 20px;
-    
-  }
-  hr{
-    border: 1px solid rgb(190, 190, 226);
-    width:350px;
-  }
-/*task*/
-.task-card{
-  display:flex;
-flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding:50px;
-  border: 0.5px solid rgb(122, 98, 231);
- /* margin-Top:200px;*/
-}
-.container-tasklist{
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 200px;
-}
-.title-taskliste{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom:20px ;
-  color:darkslateblue;
-}
-.task{
-  margin:10px;
-  flex:2;
-  border: 1px solid rgb(158, 123, 182);
-  height: 70px;
-  max-width: 20%;
-
-}
-/*home*/
-.container-home{
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 200px;
-}
-.typography-home{
-  text-align: center;
- 
-
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
