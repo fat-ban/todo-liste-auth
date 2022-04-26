@@ -14,6 +14,7 @@ import { useUserAuth } from "../context/UserAuthContext";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
   const [password, setPassword] = useState("");
 
   const { logIn,googleSignIn } = useUserAuth();
@@ -22,8 +23,10 @@ const SignIn = () => {
 
   //sign in with google
   const handleGoogleSignIn=async (e)=>{
+    e.preventDefault()
  try {
    await googleSignIn()
+   navigate("/welcome")
 
  } catch (error) {
    console.log(error)
@@ -33,10 +36,10 @@ const SignIn = () => {
   const handleSubmit= async(e)=>{
     e.preventDefault()
     setError("");
-    console.log(`${email} ${password}`)
+    
     try {
       await logIn(email, password);
-     
+     setLoading(true)
       navigate("/welcome");
 
     } catch (err) {
@@ -45,7 +48,10 @@ const SignIn = () => {
     }
   }
   return (
+
     <>
+   
+      
       <Card className="card">
         <Typography variant="h4" component="h2">
           Log In
@@ -97,6 +103,8 @@ const SignIn = () => {
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </Typography>
       </Card>
+      
+    
     </>
   );
 };

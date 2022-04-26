@@ -45,7 +45,9 @@ const NAvbar = () => {
           {
             user ?
             (
+              
               <Tab label={<Link to="/signin" onClick={handleLogOut}>Log Out</Link>} />
+              
             ):(
               <>
               <Tab label={<Link to="/signin">Sign In</Link>} />

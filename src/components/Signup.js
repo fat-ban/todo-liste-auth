@@ -8,6 +8,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
+  
   const { signUp } = useUserAuth();
   let navigate = useNavigate();
 
@@ -57,9 +58,8 @@ const Signup = () => {
             color="secondary"
             onChange={(e) => setPassword(e.target.value)}
           />
-         </form>  
-           
-          <Button
+
+<Button
             className="btn"
             size="large"
             variant="contained"
@@ -69,6 +69,9 @@ const Signup = () => {
             Sign up
           </Button>
        
+         </form>  
+           
+          
       </Card>
       <Card className="card-bottom">
         <Typography component="span">
