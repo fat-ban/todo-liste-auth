@@ -5,6 +5,10 @@ const shortid = require("shortid")
 
 const app = express()
 
+// ADD THIS
+var cors = require('cors');
+app.use(cors());
+
 app.use(express.json())
 app.use(bodyParser.json())
 
@@ -61,7 +65,20 @@ app.delete("/api/tasks/:id", async (req, res) => {
     
   });
 
+  //update
+  app.put("/api/tasks/:id", async (req,res)=> {
+      try {
+          const {id} =req.params;
+          const task = await Task.findById(id);
+          Object.assign(task, req.body)
+            task.save()
+            res.send({data: task})
+      } catch (error) {
+          console.log(error.message)
+      }
+  })
+
 
 //server
-const port = process.env.Port || 5000;
+const port = process.env.PORT || 8000;
 app.listen(port,()=>console.log(`Server at http://localhost:${port}`))

@@ -1,9 +1,10 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Container, Typography, Box } from "@material-ui/core";
 import TaskListes from "./TaskListes";
 import { useUserAuth } from "../context/UserAuthContext";
 
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios"
 
 const useStyles = makeStyles({
   welcomeTypog: {
@@ -19,6 +20,23 @@ const Welcome = () => {
   console.log(user);
 
   
+ /* useEffect(() => {
+    const fetchTasks = async()=>{
+      try{
+       
+        const res = await axios.get("http://localhost:8000/api/tasks")
+        
+        setTask(res.data)
+        console.log(task)
+      } catch (error) {
+         console.log(error)
+      }
+
+    }
+
+  
+    fetchTasks()
+  }, [])*/
  
 
   return (

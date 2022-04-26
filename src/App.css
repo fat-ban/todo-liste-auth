@@ -25,6 +25,7 @@ body {
   align-items: center;
   /* height: 200px;*/
   margin-top: 70px;
+  border-radius: 5px;
 }
 .form {
   height: 200px;

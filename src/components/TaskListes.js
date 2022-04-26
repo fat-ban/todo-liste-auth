@@ -1,5 +1,5 @@
-import React, { useEffect,useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 //import Modal from "react-modal";
 import Task from "./Task";
 //from material
@@ -13,16 +13,17 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
+//import { set } from "mongoose";
 //import ModalAddTaskComp from "./ModalAddTaskComp";
 //import { Zoom } from "react-reveal/Zoom";
-import data from '../data.json'
+//import data from '../data.json'
 
 const TaskListes = () => {
   // console.log(task);
   //get data from localStorage
-  const [task, setTask] = useState(data.todo)
-  console.log(task)
-    /*()=>{
+  const [task, setTask] = useState([]);
+  //console.log(task)
+  /*()=>{
     const savedTask = localStorage.getItem('task')
     if (savedTask) {
       return JSON.parse(savedTask)
@@ -30,14 +31,34 @@ const TaskListes = () => {
       return []
     }
   }*/
-  
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const res = await axios.get("api/tasks");
+        console.log(res.data);
+        setTask(res.data);
+        //console.log(task);
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else {
+          console.log(error.message);
+        }
+      }
+    };
+    fetchTasks();
+  }, []);
 
   const [displayModal, setDisplayModal] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [day, setDay] = useState("");
 
-  const [newTask, setNewTask] = useState({}
+  const [newTask, setNewTask] = useState(
+    {}
     /*()=>{
     const savedNewTask = localStorage.getItem("newTask")
     if (savedNewTask) {
@@ -45,21 +66,20 @@ const TaskListes = () => {
     }else {
       return []
     }
-  }*/);
+  }*/
+  );
 
   //const [addTAsk, setaddTAsk] = useState("");
   const [dayFilter, setDayFilter] = useState("");
-const [filter, setFilter] = useState(false)
+  const [filter, setFilter] = useState(false);
 
-/* useEffect(() => {
+  /* useEffect(() => {
     
     localStorage.setItem("task", JSON.stringify(task))
     console.log(task);
     localStorage.setItem("newTask", JSON.stringify(newTask))
     
   }, [newTask,task])*/
-
-  
 
   const handleAddTask = () => {
     setDisplayModal(true);
@@ -71,18 +91,30 @@ const [filter, setFilter] = useState(false)
   };
 
   //add NewTask///
-  const handleSubmitModal = (e) => {
+  const handleSubmitModal = async (e) => {
     e.preventDefault();
-    setFilter(false)
+    setFilter(false);
+    const newTask ={title,description,day}
     //add new task
-    if (title && description && day) {
-    
-     setTask([...task, 
-      { title, description, day,
-      id : Date.now()
-      }])
+    try {
+      const res = await axios.post("/api/tasks",newTask)
+      console.log(res.data);
+      //const allTasks = [...task, res.data]
+
+      if (title && description && day) {
+         setTask( [...task, res.data])
+        //setTask([...task, { title, description, day, id: Date.now() }]);
+        //setTask(allTasks)
+        console.log(task);
+      }
+      setTitle('')
+      setDescription('')
+      setDay('')
       
+    } catch (error) {
+      console.log(error.massage);
     }
+   
 
     setDisplayModal(false);
     //console.log(newTask);
@@ -91,28 +123,41 @@ const [filter, setFilter] = useState(false)
     setDay("");
   };
 
-  
-//filter data ///////
+  //filter data ///////
   const handleOnChangeFilter = (e) => {
-    setFilter(true)
+    setFilter(true);
 
     setDayFilter(e.target.value);
-    console.log(e.target.value)
+    console.log(e.target.value);
     //localStorage.getItem("task")
     if (e.target.value === "") {
       setNewTask(task);
       console.log(newTask);
     } else {
       setNewTask(task.filter((item) => item.day === `${e.target.value}`));
-      setFilter(true)
+      setFilter(true);
     }
   };
 
   //delete/////////////
-  const handleDelete = (id) => {
-   
-    setTask(task.filter((item) => item.id !== id))
+  const handleDelete = async (id) => {
+    //console.log(task)
+    try {
+       await axios.delete(`/api/tasks/${id}`)
+      
+      const taskDelete = task.filter(item => item._id !== id);
+      //console.log(task.filter(item => item._id !== id));
+      setTask(taskDelete)
+      console.log(taskDelete);
+    } catch (error) {
+       console.log(error.message)
+    }
+    
   };
+
+  //update/////
+
+
 
   return (
     <Container
@@ -215,17 +260,19 @@ const [filter, setFilter] = useState(false)
         </Modal>
       )}
       <div className="task-card">
-        {filter ?
-        (
-          newTask &&
-          newTask.map((item) => (
-            <Task item={item} handleDelete={ handleDelete} key={item.id}/>
-          ))
-        )
-        :(task !== [] &&
-          task.map((item) => (
-            <Task item={item} handleDelete={ handleDelete}  key={item.id}/>
-          )))}
+        {filter
+          ? newTask &&
+            newTask.map((item) => (
+              <Task task={task} item={item}handleDelete={handleDelete} key={item.id} setTask={setTask}
+              // updateItem={updateItem}
+              />
+            ))
+          : task !== [] &&
+            task.map((item) => (
+              <Task item={item}  handleDelete={handleDelete} key={item.id} setTask={setTask}
+               //updateItem={updateItem}
+               />
+            ))}
       </div>
     </Container>
   );

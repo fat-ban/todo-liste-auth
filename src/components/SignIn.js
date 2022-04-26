@@ -14,7 +14,7 @@ import { useUserAuth } from "../context/UserAuthContext";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false)
+  //const [loading, setLoading] = useState(false)
   const [password, setPassword] = useState("");
 
   const { logIn,googleSignIn } = useUserAuth();
@@ -39,7 +39,8 @@ const SignIn = () => {
     
     try {
       await logIn(email, password);
-     setLoading(true)
+      
+     //setLoading(true)
       navigate("/welcome");
 
     } catch (err) {

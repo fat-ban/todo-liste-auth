@@ -5,7 +5,7 @@ import NAvbar from "./components/Navbar";
 import SignIn from "./components/SignIn";
 import Signup from "./components/Signup";
 import Welcome from "./components/Welcome";
-//import ProtectedRoute from "./components/ProtectedRoute"
+import ProtectedRoute from "./components/ProtectedRoute"
 
 //import { todo } from "./data.json";
 import {UserAuthContextProvider} from "./context/UserAuthContext"
@@ -31,7 +31,9 @@ function App() {
       {/*<SignIn/>*/}
       {/* <Welcome task={todo}/>*/}
       <Routes>
-       { /*<Route path="/welcome" element={<ProtectedRoute><Welcome task={task} setTask={setTask} /></ProtectedRoute>}/>*/}
+       <Route path="/welcome" element={<ProtectedRoute><Welcome 
+       //task={task} setTask={setTask}
+        /></ProtectedRoute>}/>
         <Route path="/welcome" element={<Welcome />}/>
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
