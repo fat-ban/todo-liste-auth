@@ -36,8 +36,17 @@ const TaskListes = () => {
     const fetchTasks = async () => {
       try {
         const res = await axios.get("api/tasks");
-        console.log(res.data);
-        setTask(res.data);
+        console.log(res);
+        const result = res.data
+        console.log(result)
+        const {status,message,data}=res
+        if(status !== 200){
+            alert(message,"status")
+        }else {
+          setTask(data);
+          console.log(task);
+        }
+       
         //console.log(task);
       } catch (error) {
         if (error.response) {
@@ -99,12 +108,9 @@ const TaskListes = () => {
     try {
       const res = await axios.post("/api/tasks",newTask)
       console.log(res.data);
-      //const allTasks = [...task, res.data]
 
       if (title && description && day) {
          setTask( [...task, res.data])
-        //setTask([...task, { title, description, day, id: Date.now() }]);
-        //setTask(allTasks)
         console.log(task);
       }
       setTitle('')

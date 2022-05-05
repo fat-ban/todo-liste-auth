@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -7,8 +7,7 @@ import {
   InputLabel,
   Select,
 } from "@material-ui/core";
-//import 'bootstrap/dist/css/bootstrap.min.css';
-//import { Modal,ModalHeader,ModalBody,ModalFooter} from "reactstrap";
+
 import Modal from "react-modal";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,61 +19,81 @@ const useStyles = makeStyles({
   },
 });
 
-const Task = ({ item, handleDelete, task,setTask, updateItem }) => {
+const Task = ({ item, handleDelete, task, setTask, updateItem }) => {
   const classes = useStyles();
 
   const [showModalUpdate, setShowModalUpdate] = useState(false);
   const [titleUpdate, setTitleUpdate] = useState("");
   const [descriptionUpdate, setDescriptionUpdate] = useState("");
   const [dayUpdate, setDayUpdate] = useState("");
-  //const [updateTask, setUpdateTask] = useState("");
+  //const [state, setState] = useState()
+  const [updateTask, setUpdateTask] = useState("");
 
   //update
   const handleUpdateModal = () => {
     setShowModalUpdate(true);
   };
 
- /* useEffect(() => {
-    handleUpdate(id)
-  }, [id])*/
-  
+  /* useCallback((id) => 
+       handleUpdate(id)
+  ,[])*/
 
   const handleUpdate = async (id) => {
-    console.log(id);
-    const updateTask ={ title:titleUpdate,description : descriptionUpdate,day:dayUpdate}
-    try {
-     const resp = await axios.put(`/api/tasks/${id}`,updateTask);
-     console.log(resp);
-     
-      if (titleUpdate || descriptionUpdate || dayUpdate) {
-        //updateItem(item.id)
+    //console.log(id);
+    const updateTask = {
+      title: titleUpdate,
+      description: descriptionUpdate,
+      day: dayUpdate,
+    };
+    //const updateTask = { titleUpdate, descriptionUpdate, dayUpdate };
+ console.log(updateTask.title)
+    const url = `/api/tasks/${id}`;
 
-        setTask(task.map(item=> item.id === id ? {
-         ...resp.data} : task))
+    await axios
+      .put(url, updateTask)
 
-     
-      }
-      console.log(task);
+      .then((resp) => {
+        setUpdateTask(resp.data.data);
+        console.log(updateTask);
+        //setTask(...task,updateTask)
+        //console.log(task);
+        //const result = resp.data;
+        const { status, message } = resp.data;
+        //essayer
 
-      setTitleUpdate("")
-      setDescriptionUpdate('')
-      setDayUpdate('')
-      //item.title:updateTask.title;
+        if (status !== "SUCCES") {
+          alert(message, status);
+        } else {
+          alert(message);
+        }
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    //if (titleUpdate || descriptionUpdate || dayUpdate) {
+    //updateItem(item.id)
+    //const {data} = resp;
+    /*setTask(task.map(item => item.id === id ? 
+         [...task,{updateTask}]
+setTask({resp.data.data})
+    //console.log(task);
 
-    } catch (error) {
-      console.log(error.message)
-    }
+    /*setTitleUpdate("");
+    setDescriptionUpdate("");
+    setDayUpdate("");*/
+    //item.title:updateTask.title;
   };
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    console.log(titleUpdate, descriptionUpdate, dayUpdate);
-    
+    console.log("titleUpdate, descriptionUpdate, dayUpdate");
+
     handleUpdate(item._id);
     //reset modal update
-    
+
     //setTask([...task, updateTask]);
-  
+
     setShowModalUpdate(false);
   };
 
@@ -126,7 +145,13 @@ const Task = ({ item, handleDelete, task,setTask, updateItem }) => {
                 type="text"
                 label="title"
                 variant="outlined"
-                onChange={(e) => setTitleUpdate(e.target.value)}
+                onChange={(e) => {
+                 // item.title !== ""
+                   // ? setTitleUpdate(item.title)
+                    //: 
+                    setTitleUpdate(e.target.value);
+                }}
+                defaultValue={item.title}
               />
               <TextField
                 className="input-modal"
@@ -134,6 +159,7 @@ const Task = ({ item, handleDelete, task,setTask, updateItem }) => {
                 type="text"
                 variant="outlined"
                 onChange={(e) => setDescriptionUpdate(e.target.value)}
+                defaultValue={item.description}
               />
 
               <InputLabel htmlFor="age-native-simple">Day</InputLabel>
@@ -157,7 +183,7 @@ const Task = ({ item, handleDelete, task,setTask, updateItem }) => {
                 variant="contained"
                 color="primary"
                 type="submit"
-                onClick={() => handleUpdate(item._id)}
+                //onClick={() => handleUpdate(item._id)}
               >
                 Update
               </Button>
